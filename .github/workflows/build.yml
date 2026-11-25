@@ -16,3 +16,4 @@ jobs:
     with:
       crate: 'gdpatch-loader'
       artifact_configuration_slug: 'loader'
+      signing_policy: ${{ startsWith(github.ref, 'refs/tags/v') && 'release-signing' || 'test-signing' }}
