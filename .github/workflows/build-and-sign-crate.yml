@@ -81,7 +81,7 @@ jobs:
         uses: actions/upload-artifact@v7
         id: upload-unsigned-artifact
         with:
-          name: ${{ inputs.crate }}-${{ matrix.target }}-unsigned
+          name: ${{ matrix.target == 'x86_64-pc-windows-gnu' && 'unsigned-' || '' }}${{ inputs.crate }}-${{ matrix.target }}
           path: target/${{ matrix.target }}/release/${{ steps.determine-artifact-path.outputs.ARTIFACT_NAME }}
           if-no-files-found: 'error'
 
