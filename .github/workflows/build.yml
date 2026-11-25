@@ -14,4 +14,4 @@ jobs:
       SIGNPATH_API_TOKEN: ${{ secrets.SIGNPATH_API_TOKEN }}
 
     with:
-      crate: 'gdpatch'
+      crate: 'gdpatch_loader'
