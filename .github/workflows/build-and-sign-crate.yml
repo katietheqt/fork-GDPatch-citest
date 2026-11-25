@@ -102,6 +102,7 @@ jobs:
           artifact-configuration-slug: "${{ inputs.artifact_configuration_slug }}"
           wait-for-completion: true
           output-artifact-directory: 'signed'
+          skip-decompress: 'true'
 
       - name: Upload Signed Artifact
         uses: actions/upload-artifact@v7
