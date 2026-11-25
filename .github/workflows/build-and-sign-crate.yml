@@ -62,7 +62,7 @@ jobs:
         run: sudo apt-get install --yes --no-install-recommends gcc-mingw-w64-x86-64-win32
 
       - name: Build
-        run: cargo build --package ${{ inputs.crate }} --release --target ${{ matrix.target }}
+        run: cargo build --package ${{ matrix.filename }} --release --target ${{ matrix.target }}
 
       - name: Determine Artifact Path
         id: determine-artifact-path
