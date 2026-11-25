@@ -1,16 +1,16 @@
+use crate::USER_AGENT;
 use crate::godot_version::GodotVersion;
 use crate::keycloak::perform_keycloak_sso;
 use color_eyre::Result;
 use color_eyre::eyre::{Context, OptionExt, bail, ensure};
 use regex::regex;
-use reqwest::{redirect, Client, ClientBuilder};
 use reqwest::header::{ETAG, HeaderValue, SET_COOKIE};
 use reqwest::multipart::Form;
+use reqwest::{Client, ClientBuilder, redirect};
 use serde::{Deserialize, Serialize};
 use std::iter::zip;
-use crate::USER_AGENT;
 
-const ASSET_STORE: &'static str = "https://store.godotengine.org";
+const ASSET_STORE: &str = "https://store.godotengine.org";
 
 // Multipart uploads and PUT requests sent to the CDN using presigned URLs have a maximum payload
 // of 8100 KiB (7.91 MiB).
@@ -140,7 +140,7 @@ impl AssetStoreUploadBuilder {
         chunk_count: usize,
     ) -> Result<(SuccessfulUploadUrlResponse, HeaderValue)> {
         let req_body = self
-            .create_base_request_form(&csrf_token)
+            .create_base_request_form(csrf_token)
             .text("filename", filename.to_string())
             .text("upload_chunks", chunk_count.to_string());
 
@@ -149,7 +149,7 @@ impl AssetStoreUploadBuilder {
             .0
             .post(format!(
                 "{ASSET_STORE}/asset/{}/version/upload_url/",
-                &self.slug
+                self.slug
             ))
             .multipart(req_body);
 
@@ -232,10 +232,7 @@ impl AssetStoreUploadBuilder {
         let response = self
             .client
             .0
-            .post(format!(
-                "{ASSET_STORE}/asset/{}/version/create/",
-                &self.slug
-            ))
+            .post(format!("{ASSET_STORE}/asset/{}/version/create/", self.slug))
             .multipart(create_request_body)
             .send()
             .await?

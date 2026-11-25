@@ -164,11 +164,11 @@ async fn upload_to_asset_store(store: &AssetStore, upload: &AssetStoreUpload) ->
     }
 
     if let Some(min_godot_version) = &upload.min_godot_version {
-        upload_builder.min_godot_version(min_godot_version.clone());
+        upload_builder.min_godot_version(*min_godot_version);
     }
 
     if let Some(max_godot_version) = &upload.max_godot_version {
-        upload_builder.min_godot_version(max_godot_version.clone());
+        upload_builder.min_godot_version(*max_godot_version);
     }
 
     upload_builder.finish(&upload.filename, &content).await?;
@@ -187,12 +187,14 @@ async fn edit_asset_library(library: &AssetLibrary, edit: &AssetLibraryEdit) -> 
         None
     };
 
-    client.edit(
-        edit.id,
-        description.as_deref(),
-        edit.commit.as_deref(),
-        edit.version.as_deref(),
-    ).await?;
+    client
+        .edit(
+            edit.id,
+            description.as_deref(),
+            edit.commit.as_deref(),
+            edit.version.as_deref(),
+        )
+        .await?;
 
     Ok(())
 }

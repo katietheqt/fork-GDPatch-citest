@@ -26,7 +26,12 @@ fn get_redirect_url(response: &Response) -> Result<Url> {
 
 /// Performs Keycloak SSO using a username and password. The provided `initial_url` should redirect
 /// to a Keycloak portal and the client needs a cookie jar.
-pub async fn perform_keycloak_sso(client: &Client, initial_url: &str, username: &str, password: &str) -> Result<()> {
+pub async fn perform_keycloak_sso(
+    client: &Client,
+    initial_url: &str,
+    username: &str,
+    password: &str,
+) -> Result<()> {
     let auth_redirect_response = client.get(initial_url).send().await?.error_for_status()?;
 
     if !auth_redirect_response.status().is_redirection() {
@@ -54,7 +59,8 @@ pub async fn perform_keycloak_sso(client: &Client, initial_url: &str, username: 
         credential_id: "".into(),
     };
 
-    let authenticate_response = client.post(authenticate_url)
+    let authenticate_response = client
+        .post(authenticate_url)
         .form(&authenticate_params)
         .send()
         .await?;
@@ -64,7 +70,11 @@ pub async fn perform_keycloak_sso(client: &Client, initial_url: &str, username: 
     }
 
     let client_authenticate_url = get_redirect_url(&authenticate_response)?;
-    client.get(client_authenticate_url).send().await?.error_for_status()?;
+    client
+        .get(client_authenticate_url)
+        .send()
+        .await?
+        .error_for_status()?;
 
     Ok(())
 }

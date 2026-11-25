@@ -6,7 +6,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use std::borrow::Cow;
 use std::fmt::{Display, Formatter};
 
-const API_BASE: &'static str = "https://godotengine.org/asset-library/api";
+const API_BASE: &str = "https://godotengine.org/asset-library/api";
 
 #[derive(Debug, Deserialize)]
 struct ErrorResponse {
@@ -110,7 +110,7 @@ impl AssetLibraryClient {
 
         let response = self
             .client
-            .post(&format!("{API_BASE}/login"))
+            .post(format!("{API_BASE}/login"))
             .form(&body)
             .send()
             .await?;
@@ -144,7 +144,7 @@ impl AssetLibraryClient {
 
         let response = self
             .client
-            .post(&format!("{API_BASE}/asset/edit/{id}"))
+            .post(format!("{API_BASE}/asset/edit/{id}"))
             .json(&body)
             .send()
             .await?;
