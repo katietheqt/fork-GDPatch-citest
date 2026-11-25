@@ -33,7 +33,7 @@ jobs:
             host: macos-latest
             filename: lib${{ inputs.crate }}.dylib
 
-    name: Build ${{ matrix.target }}
+    name: Build for ${{ matrix.target }}
     runs-on: ${{ matrix.host }}
 
     env:
@@ -61,7 +61,7 @@ jobs:
         run: sudo apt-get install --yes --no-install-recommends gcc-mingw-w64-x86-64-win32
 
       - name: Build
-        run: cargo build --package ${{ inputs.config-path }} --release --target ${{ matrix.target }}
+        run: cargo build --package ${{ inputs.crate }} --release --target ${{ matrix.target }}
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v7
