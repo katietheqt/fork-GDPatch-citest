@@ -84,6 +84,7 @@ jobs:
         with:
           name: ${{ inputs.crate }}-${{ matrix.target }}-unsigned
           path: target/${{ matrix.target }}/release/${{ steps.determine-artifact-path.outputs.ARTIFACT_NAME }}
+          archive: 'false'
           if-no-files-found: 'error'
 
       - name: Sign (Windows)
@@ -107,5 +108,6 @@ jobs:
         if: ${{ matrix.target == 'x86_64-pc-windows-gnu' }}
         with:
           name: ${{ inputs.crate }}-${{ matrix.target }}
-          path: 'signed'
+          path: 'signed/${{ steps.determine-artifact-path.outputs.ARTIFACT_NAME }}'
+          archive: 'true'
           if-no-files-found: 'error'
