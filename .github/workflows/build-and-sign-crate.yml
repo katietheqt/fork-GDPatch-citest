@@ -39,6 +39,7 @@ jobs:
     env:
       CARGO_TERM_COLOR: always
       CARGO_REGISTRIES_CRATES_IO_PROTOCOL: sparse
+      BUILD_TARGET: ${{ matrix.target }}
 
     steps:
       - name: Checkout
@@ -81,7 +82,7 @@ jobs:
           if-no-files-found: 'error'
 
     outputs:
-      ${{ matrix.target }}: "${{ steps.upload-artifact.outputs.artifact-id }}"
+      ${{ env.BUILD_TARGET }}: "${{ steps.upload-artifact.outputs.artifact-id }}"
 
   sign_windows:
     name: Sign for Windows
