@@ -80,13 +80,13 @@ jobs:
           path: target/${{ matrix.target }}/release/${{ steps.determine-artifact-path.outputs.ARTIFACT_NAME }}
           if-no-files-found: 'error'
 
+    outputs:
+      ${{ matrix.target }}: "${{ steps.upload-artifact.outputs.artifact-id }}"
+
   sign_windows:
     name: Sign for Windows
     runs-on: ubuntu-latest
     needs: build
-
-    env:
-      TARGET_TO_SIGN: x86_64-pc-windows-gnu
 
     steps:
       - name: Sign
@@ -99,13 +99,13 @@ jobs:
           organization-id: '${{ vars.SIGNPATH_ORGANIZATION_ID }}'
           project-slug: '${{ vars.SIGNPATH_PROJECT_SLUG }}'
           signing-policy-slug: '${{ env.SIGNPATH_SIGNING_POLICY_SLUG }}'
-          github-artifact-id: "${{ inputs.crate }}-${{ env.TARGET_TO_SIGN }}"
+          github-artifact-id: "${{ needs.build.outputs.x86_64-pc-windows-gnu }} }}"
           wait-for-completion: true
           output-artifact-directory: 'signed'
 
       - name: Upload Signed Artifact
         uses: actions/upload-artifact@v7
         with:
-          name: ${{ inputs.crate }}-${{ env.TARGET_TO_SIGN }}-signed
+          name: ${{ inputs.crate }}-x86_64-pc-windows-gnu-signed
           path: 'signed'
           if-no-files-found: 'error'
