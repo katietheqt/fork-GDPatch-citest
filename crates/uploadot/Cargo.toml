@@ -1,0 +1,17 @@
+[package]
+name = "uploadot"
+description = "Packager and uploader for the Godot Asset Library/Store"
+edition.workspace = true
+license.workspace = true
+version.workspace = true
+
+[dependencies]
+clap = { workspace = true, features = ["env", "derive"] }
+reqwest = { workspace = true, features = ["multipart", "json", "cookies", "form"] }
+serde_json.workspace = true
+serde.workspace = true
+color-eyre.workspace = true
+regex.workspace = true
+tokio = { workspace = true, features = ["macros", "rt-multi-thread", "fs"] }
+
+env_logger = "0.11.12"

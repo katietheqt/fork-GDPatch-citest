@@ -1,0 +1,15 @@
+name: Build and Sign
+description: Builds a Rust crate and signs it
+runs:
+  using: composite
+  steps:
+    - name: Setup Toolchain
+      run:
+# - take desired crate
+# - matrix:
+#   - set up rust cache
+#   - build macos, linux, cross windows
+#   - upload as artifacts
+#   - sign with signpath (test for all commits, real for release)
+#   - (RELEASE) sign macos with someones certificate
+#   - upload signed artifacts
