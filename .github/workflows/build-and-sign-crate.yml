@@ -8,6 +8,11 @@ on:
         type: string
         description: "Which crate to build"
 
+      artifact_configuration_slug:
+        required: true
+        type: string
+        description: "Signpath artifact configuration slug"
+
     secrets:
       SIGNPATH_API_TOKEN:
         description: 'API key for submitting Signpath signing requests'
@@ -93,6 +98,7 @@ jobs:
           project-slug: '${{ vars.SIGNPATH_PROJECT_SLUG }}'
           signing-policy-slug: '${{ env.SIGNPATH_SIGNING_POLICY_SLUG }}'
           github-artifact-id: "${{ steps.upload-unsigned-artifact.outputs.artifact-id }}"
+          artifact-configuration-slug: "${{ inputs.artifact_configuration_slug }}"
           wait-for-completion: true
           output-artifact-directory: 'signed'
 

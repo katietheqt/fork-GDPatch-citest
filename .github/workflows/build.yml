@@ -15,3 +15,4 @@ jobs:
 
     with:
       crate: 'gdpatch-loader'
+      artifact_configuration_slug: 'loader'
