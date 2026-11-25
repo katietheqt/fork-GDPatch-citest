@@ -64,12 +64,18 @@ jobs:
       - name: Build
         run: cargo build --package ${{ inputs.crate }} --release --target ${{ matrix.target }}
 
+      - name: Determine Artifact Path
+        id: determine-artifact-path
+        run: |
+          ARTIFACT_NAME=$(echo '${{ inputs.crate }}' | sed 's/-/_/g')
+          echo "ARTIFACT_NAME=$ARTIFACT_NAME" > $GITHUB_OUTPUT
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v7
         id: upload-artifact
         with:
           name: ${{ inputs.crate }}-${{ matrix.target }}
-          path: target/${{ matrix.target }}/release/${{ matrix.filename }}
+          path: target/${{ matrix.target }}/release/${{ steps.determine-artifact-path.outputs.ARTIFACT_NAME }}
           if-no-files-found: 'error'
 
   sign_windows:
