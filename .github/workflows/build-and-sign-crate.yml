@@ -62,12 +62,12 @@ jobs:
         run: sudo apt-get install --yes --no-install-recommends gcc-mingw-w64-x86-64-win32
 
       - name: Build
-        run: cargo build --package ${{ matrix.filename }} --release --target ${{ matrix.target }}
+        run: cargo build --package ${{ inputs.crate }} --release --target ${{ matrix.target }}
 
       - name: Determine Artifact Path
         id: determine-artifact-path
         run: |
-          ARTIFACT_NAME=$(echo '${{ inputs.crate }}' | sed 's/-/_/g')
+          ARTIFACT_NAME=$(echo '${{ matrix.filename }}' | sed 's/-/_/g')
           echo "ARTIFACT_NAME=$ARTIFACT_NAME" > $GITHUB_OUTPUT
 
       - name: Upload Artifact
