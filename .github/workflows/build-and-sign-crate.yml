@@ -25,13 +25,13 @@ jobs:
             host: ubuntu-latest
             filename: ${{ inputs.crate }}.dll
 
-          - target: x86_64-unknown-linux-gnu
-            host: ubuntu-latest
-            filename: lib${{ inputs.crate }}.so
-
-          - target: aarch64-apple-darwin
-            host: macos-latest
-            filename: lib${{ inputs.crate }}.dylib
+#          - target: x86_64-unknown-linux-gnu
+#            host: ubuntu-latest
+#            filename: lib${{ inputs.crate }}.so
+#
+#          - target: aarch64-apple-darwin
+#            host: macos-latest
+#            filename: lib${{ inputs.crate }}.dylib
 
     name: Build for ${{ matrix.target }}
     runs-on: ${{ matrix.host }}
