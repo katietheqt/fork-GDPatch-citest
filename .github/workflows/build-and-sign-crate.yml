@@ -109,5 +109,5 @@ jobs:
         with:
           name: ${{ inputs.crate }}-${{ matrix.target }}
           path: 'signed/${{ steps.determine-artifact-path.outputs.ARTIFACT_NAME }}'
-          archive: 'true'
+          archive: 'false'
           if-no-files-found: 'error'
