@@ -92,7 +92,7 @@ jobs:
           organization-id: '${{ vars.SIGNPATH_ORGANIZATION_ID }}'
           project-slug: '${{ vars.SIGNPATH_PROJECT_SLUG }}'
           signing-policy-slug: '${{ env.SIGNPATH_SIGNING_POLICY_SLUG }}'
-          github-artifact-id: "${{ steps.upload-artifact.outputs.artifact-id }}"
+          github-artifact-id: "${{ steps.upload-unsigned-artifact.outputs.artifact-id }}"
           wait-for-completion: true
           output-artifact-directory: 'signed'
 
