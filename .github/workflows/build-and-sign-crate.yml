@@ -44,7 +44,6 @@ jobs:
     env:
       CARGO_TERM_COLOR: always
       CARGO_REGISTRIES_CRATES_IO_PROTOCOL: sparse
-      BUILD_TARGET: ${{ matrix.target }}
 
     steps:
       - name: Checkout
@@ -84,7 +83,6 @@ jobs:
         with:
           name: ${{ inputs.crate }}-${{ matrix.target }}-unsigned
           path: target/${{ matrix.target }}/release/${{ steps.determine-artifact-path.outputs.ARTIFACT_NAME }}
-          archive: 'false'
           if-no-files-found: 'error'
 
       - name: Sign (Windows)
@@ -102,13 +100,11 @@ jobs:
           artifact-configuration-slug: "${{ inputs.artifact_configuration_slug }}"
           wait-for-completion: true
           output-artifact-directory: 'signed'
-          skip-decompress: 'true'
 
       - name: Upload Signed Artifact
         uses: actions/upload-artifact@v7
         if: ${{ matrix.target == 'x86_64-pc-windows-gnu' }}
         with:
           name: ${{ inputs.crate }}-${{ matrix.target }}
-          path: 'signed/${{ steps.determine-artifact-path.outputs.ARTIFACT_NAME }}'
-          archive: 'false'
+          path: 'signed'
           if-no-files-found: 'error'
