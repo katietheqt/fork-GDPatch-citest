@@ -56,6 +56,8 @@ jobs:
 
       - name: Setup Cache
         uses: Swatinem/rust-cache@v2
+        with:
+          key: "${{ matrix.target }}"
 
       - name: Set up MinGW
         if: matrix.target == 'x86_64-pc-windows-gnu'
